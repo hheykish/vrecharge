@@ -1,0 +1,19 @@
+
+    <!-- <h1>Enter Your Mobile Number</h1>
+    <input type="text" id="mobileInput" placeholder="Enter 10-digit number" maxlength="10" oninput="validateInput(this)">
+    <button id="submitBtn">Submit</button> -->
+
+    <script>
+        function validateInput(input) {
+            input.value = input.value.replace(/[^0-9]/g, '').slice(0, 10);
+        }
+
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const mobileNumber = document.getElementById('mobileInput').value;
+            if (mobileNumber.length === 10) {
+                window.location.href = `first.html?mobile=${mobileNumber}`; // Redirect with parameter
+            } else {
+                alert('Please enter a valid 10-digit mobile number.');
+            }
+        });
+    </script>
